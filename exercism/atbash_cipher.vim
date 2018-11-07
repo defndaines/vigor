@@ -1,13 +1,13 @@
 function! AtbashDecode(cipher) abort
-  return tr(substitute(tolower(a:cipher), ' ', '', 'g'), 'abcdefghijklmnopqrstuvwxyz', 'zyxwvutsrqponmlkjihgfedcba')
+  return s:Translate(a:cipher)
 endfunction
 
 function! AtbashEncode(plaintext) abort
-  let s:normalized = substitute(tolower(a:plaintext), '[^[:alnum:]]', '', 'g')
-  let s:normalized = tr(s:normalized, 'abcdefghijklmnopqrstuvwxyz', 'zyxwvutsrqponmlkjihgfedcba')
-  let s:chunks = []
-  for n in range(0, len(s:normalized) - 1, 5)
-    call add(s:chunks, s:normalized[n:n + 4])
-  endfor
-  return join(s:chunks)
+  let s:normalized = s:Translate(a:plaintext)
+  return join(split(s:normalized, '.\{5}\zs'))
+endfunction
+
+function! s:Translate(phrase) abort
+  let s:normalized = substitute(tolower(a:phrase), '[^[:alnum:]]', '', 'g')
+  return tr(s:normalized, 'abcdefghijklmnopqrstuvwxyz', 'zyxwvutsrqponmlkjihgfedcba')
 endfunction
