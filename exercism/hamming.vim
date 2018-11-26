@@ -3,9 +3,9 @@ function! Hamming(strand1, strand2)
     throw 'The two strands must have the same length.'
   endif
 
-  let s:distance = len(a:strand1)
-  for s:i in range(len(a:strand1))
-    let s:distance -= a:strand1[s:i] ==# a:strand2[s:i]
+  let distance = len(a:strand1)
+  for i in range(len(a:strand1))
+    let distance -= a:strand1[i] ==# a:strand2[i]
   endfor
-  return s:distance
+  return distance
 endfunction
